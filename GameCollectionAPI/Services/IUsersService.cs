@@ -7,8 +7,10 @@ namespace GameCollectionAPI.Services
 {
     public interface IUsersService
     {
-        Task<IEnumerable<UserModel>> ListAsync(); //READ ALL
-        Task<SaveUserResponse> SaveAsync(UserModel user); //SAVE NEW
-        Task<SaveUserResponse> UpdateAsync(short id, UserModel user); //UPDATE BY ID
+        Task<IEnumerable<UserModel>> ListAsync(); //GET ALL
+        Task<UserResponse> FindAsync(short id); //GET BY ID
+        Task<UserResponse> SaveAsync(UserModel user); //SAVE NEW
+        Task<UserResponse> UpdateAsync(short id, UserModel user); //UPDATE BY ID
+        Task<UserResponse> RemoveAsync(short id); //DELETE BY ID
     }
 }

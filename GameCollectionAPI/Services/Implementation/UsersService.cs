@@ -23,27 +23,39 @@ namespace GameCollectionAPI.Services.Implementation
             return await this.usersRepository.ListAsync();
         }
 
-        public async Task<SaveUserResponse> SaveAsync(UserModel user)
-        {
-            try
-            {
-                await this.usersRepository.AddAsync(user);
-                await this.unitOfWork.CompleteAsync();
-                return new SaveUserResponse(user);
-            }
-            catch (Exception ex)
-            {
-                return new SaveUserResponse($"An error ocurred when trying to save new user to context: {ex.Message}");
-            }
-        }
-
-        public async Task<SaveUserResponse> UpdateAsync(short id, UserModel user)
+        public async Task<UserResponse> FindAsync(short id)
         {
             var userInContext = await this.usersRepository.FindByIdAsync(id);
 
             if (userInContext == null)
             {
-                return new SaveUserResponse("user does not exist in the context");
+                return new UserResponse("user does not exist in the context");
+            }
+
+            return new UserResponse(userInContext);
+        }
+
+        public async Task<UserResponse> SaveAsync(UserModel user)
+        {
+            try
+            {
+                await this.usersRepository.AddAsync(user);
+                await this.unitOfWork.CompleteAsync();
+                return new UserResponse(user);
+            }
+            catch (Exception ex)
+            {
+                return new UserResponse($"An error ocurred when trying to save new user to context: {ex.Message}");
+            }
+        }
+
+        public async Task<UserResponse> UpdateAsync(short id, UserModel user)
+        {
+            var userInContext = await this.usersRepository.FindByIdAsync(id);
+
+            if (userInContext == null)
+            {
+                return new UserResponse("user does not exist in the context");
             }
 
             userInContext.firstname = user.firstname;
@@ -54,11 +66,32 @@ namespace GameCollectionAPI.Services.Implementation
             {
                 this.usersRepository.Update(userInContext);
                 await this.unitOfWork.CompleteAsync();
-                return new SaveUserResponse(userInContext);
+                return new UserResponse(userInContext);
             }
             catch (Exception ex)
             {
-                return new SaveUserResponse($"An error ocurred when trying to update user in context: {ex.Message}");
+                return new UserResponse($"An error ocurred when trying to update user in context: {ex.Message}");
+            }
+        }
+
+        public async Task<UserResponse> RemoveAsync(short id)
+        {
+            var userInContext = await this.usersRepository.FindByIdAsync(id);
+
+            if (userInContext == null)
+            {
+                return new UserResponse("user does not exist in the context");
+            }
+
+            try
+            {
+                this.usersRepository.Remove(userInContext);
+                await this.unitOfWork.CompleteAsync();
+                return new UserResponse(userInContext);
+            }
+            catch (Exception ex)
+            {
+                return new UserResponse($"An error ocurred when trying to delete user in context: {ex.Message}");
             }
         }
     }

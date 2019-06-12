@@ -10,5 +10,6 @@ namespace GameCollectionAPI.Repositories
         Task AddAsync(UserModel user);
         Task<UserModel> FindByIdAsync(short id);
         void Update(UserModel user);
+        void Remove(UserModel user);
     }
 }

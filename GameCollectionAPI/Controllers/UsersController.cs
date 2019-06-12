@@ -30,6 +30,21 @@ namespace GameCollectionAPI.Controllers
             return userResource;
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetAsync(short id)
+        {
+            var result = await this.usersService.FindAsync(id);
+
+            if (!result.Success)
+            {
+                return BadRequest(result.Message);
+            }
+
+            var userResource = this.mapper.Map<UserModel, UserResource>(result.User);
+
+            return Ok(userResource); 
+        }
+
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody] SaveUserResource resource)
         {
@@ -73,10 +88,19 @@ namespace GameCollectionAPI.Controllers
             return Ok(userResource);
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteAsync(short id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> RemoveAsync(short id)
         {
+            var result = await this.usersService.RemoveAsync(id);
 
+            if(!result.Success)
+            {
+                return BadRequest(result.Message);
+            }
+
+            var userResource = this.mapper.Map<UserModel, UserResource>(result.User);
+
+            return Ok(userResource);
         }
     }
 }

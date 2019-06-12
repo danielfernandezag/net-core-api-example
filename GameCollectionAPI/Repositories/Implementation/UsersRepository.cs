@@ -33,6 +33,11 @@ namespace GameCollectionAPI.Repositories.Implementation
         {
             this.context.Users.Update(user);
         }
+
+        public void Remove(UserModel user)
+        {
+            this.context.Users.Remove(user);
+        }
     }
 }
 

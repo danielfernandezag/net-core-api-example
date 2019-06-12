@@ -72,6 +72,12 @@ namespace GameCollectionAPI.Controllers
 
             return Ok(userResource);
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteAsync(short id)
+        {
+
+        }
     }
 }
 

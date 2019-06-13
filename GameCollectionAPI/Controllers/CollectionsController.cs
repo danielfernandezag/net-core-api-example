@@ -22,7 +22,7 @@ namespace GameCollectionAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<CollectionResource>> Get()
+        public async Task<IEnumerable<CollectionResource>> GetAllAsync()
         {
             var collections = await this.collectionsService.ListAsync();
             var collectionsResource = this.mapper.Map<IEnumerable<CollectionModel>, IEnumerable<CollectionResource>>(collections);

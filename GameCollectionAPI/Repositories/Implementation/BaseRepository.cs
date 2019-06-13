@@ -1,4 +1,6 @@
 ﻿using GameCollectionAPI.Persistence.Contexts;
+using System;
+
 namespace GameCollectionAPI.Repositories.Implementation
 {
     public abstract class BaseRepository

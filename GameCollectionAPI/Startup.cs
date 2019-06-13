@@ -26,15 +26,10 @@ namespace GameCollectionAPI
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            //services.AddDbContext<GameCollectionDbContext>(options =>
-            //{
-
-            //    options.UseSqlServer(Configuration.GetConnectionString("DBGAMESCOLLECTION"));
-            //    //options.UseInMemoryDatabase("GAME_COLLECTION_DB");
-
-            //});
-
-            services.AddDbContext<GameCollectionDbContext>(options => options.UseSqlServer(Configuration["ConnectionString:DBGAMESCOLLECTION"]));
+            services.AddDbContext<GameCollectionDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("DBGAMESCOLLECTION"));
+            });
 
             services.AddScoped<IUsersRepository, UsersRepository>();
             services.AddScoped<ICollectionsRepository, CollectionsRepository>();

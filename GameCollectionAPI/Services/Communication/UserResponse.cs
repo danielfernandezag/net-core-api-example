@@ -16,7 +16,7 @@ namespace GameCollectionAPI.Services.Communication
 
         }
 
-        public UserResponse(string message) : this(true, message, null)
+        public UserResponse(string message) : this(false, message, null)
         {
 
         }
